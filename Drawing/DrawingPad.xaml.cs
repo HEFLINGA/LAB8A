@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,44 @@ namespace Drawing
         public DrawingPad()
         {
             this.InitializeComponent();
+        }
+
+        private void drawingCanvas_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Point mouseLocation = e.GetPosition(this.drawingCanvas);
+            Square mySquare = new Square(100);
+
+            if (mySquare is IDraw)
+            {
+                IDraw drawSquare = mySquare;
+                drawSquare.SetLocation((int)mouseLocation.X, (int)mouseLocation.Y);
+                drawSquare.Draw(drawingCanvas);
+            }
+
+            if (mySquare is IColors)
+            {
+                IColors colorsSquare = mySquare;
+                colorsSquare.SetColor(Colors.BlueViolet);
+            }
+        }
+
+        private void drawingCanvas_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            Point mouseLocation = e.GetPosition(this.drawingCanvas);
+            Circle myCircle = new Circle(100);
+
+            if (myCircle is IDraw)
+            {
+                IDraw drawCircle = myCircle;
+                drawCircle.SetLocation((int)mouseLocation.X, (int)mouseLocation.Y);
+                drawCircle.Draw(drawingCanvas);
+            }
+
+            if (myCircle is IColors)
+            {
+                IColors colorsCircle = myCircle;
+                colorsCircle.SetColor(Colors.HotPink);
+            }
         }
     }
 }
